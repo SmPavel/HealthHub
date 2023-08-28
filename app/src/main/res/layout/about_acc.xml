@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/about_acc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/about_account"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="50dp"
+        android:text="@string/user_login"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@id/about_acc"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/login_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="user login"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@id/about_acc"
+        app:layout_constraintLeft_toRightOf="@id/login"
+        />
+
+    <TextView
+        android:id="@+id/weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="50dp"
+        android:text="@string/user_weight"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@id/login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/weight_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/transparent"
+        android:text="100"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@id/login_text"
+        app:layout_constraintLeft_toRightOf="@id/weight"
+        />
+
+    <TextView
+        android:id="@+id/weight_num_dim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="5dp"
+        android:background="@android:color/transparent"
+        android:text="kg"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@id/login_text"
+        app:layout_constraintLeft_toRightOf="@id/weight_num"
+        />
+
+    <TextView
+        android:id="@+id/height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="50dp"
+        android:text="@string/user_height"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@id/weight"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/height_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/transparent"
+        android:text="180"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@id/weight_num"
+        app:layout_constraintLeft_toRightOf="@id/height"
+        />
+
+    <TextView
+        android:id="@+id/height_num_dim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="5dp"
+        android:background="@android:color/transparent"
+        android:text="sm"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@id/weight_num_dim"
+        app:layout_constraintLeft_toRightOf="@id/height_num"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
