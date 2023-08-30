@@ -14,7 +14,22 @@
         >
         <!-- Other components and configuration settings -->
 
-        <activity android:name=".SearchableActivity"
+        <activity android:name=".Activity.MainActivity"
+            android:launchMode="singleTop"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Activity.RegisterActivity" />
+
+        <activity android:name=".Activity.LoginActivity" />
+
+
+
+       <!-- <activity android:name=".SearchableActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -22,7 +37,7 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity>
+        </activity>-->
 
         <!-- Other activities and configuration settings -->
     </application>

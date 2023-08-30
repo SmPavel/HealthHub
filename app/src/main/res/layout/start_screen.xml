@@ -12,7 +12,7 @@
         android:src="@drawable/fitness_people_park_18591_40103"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        android:contentDescription="@string/welcome_image" />
 
     <TextView
         android:id="@+id/appName"

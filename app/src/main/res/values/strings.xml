@@ -24,4 +24,8 @@
     <string name="search_food">Search food</string>
     <string name="your_workout_plan">Your Workout plan</string>
     <string name="count">Count</string>
+    <string name="exercises_name">Exercises name</string>
+    <string name="delete_note">Delete note</string>
+    <string name="welcome_image">welcome_image</string>
+    <string name="confirm_password">Confirm password</string>
 </resources>

@@ -26,7 +26,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="30sp"
         android:gravity="center_vertical"
-        android:text="Exercises name"
+        android:text="@string/exercises_name"
         android:textSize="18sp"
         />
 
@@ -36,18 +36,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="50sp"
-        android:text="Count"
+        android:text="@string/count"
         android:textSize="18sp"
         />
 
-    <ImageButton
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete"
-        android:background="transparent"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="50sp"
+        android:layout_marginStart="30sp"
         android:layout_marginEnd="20sp"
-        />
+        android:background="@color/white"
+        android:src="@drawable/ic_delete"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/delete_note"/>
 
 </LinearLayout>
