@@ -10,9 +10,10 @@ import com.example.healthhub.R
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var etUsername: EditText
+    private lateinit var etEmail: EditText
     private lateinit var etPass: EditText
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_screen)
@@ -20,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
         val btnSignIn = findViewById<Button>(R.id.signIn)
         val btnBack = findViewById<Button>(R.id.back)
 
-        etUsername = findViewById(R.id.username)
+        etEmail = findViewById(R.id.email)
         etPass = findViewById(R.id.password)
 
         auth = FirebaseAuth.getInstance()
@@ -34,11 +35,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     private fun login() {
-        val email = etUsername.text.toString()
+        val email = etEmail.text.toString()
         val pass = etPass.text.toString()
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             } else
                 Toast.makeText(this, "Log In failed ", Toast.LENGTH_SHORT).show()
         }

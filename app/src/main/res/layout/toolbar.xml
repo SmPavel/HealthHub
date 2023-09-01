@@ -21,6 +21,7 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/menu_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@color/red"

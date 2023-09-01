@@ -18,6 +18,7 @@
         android:textSize="34sp" />
 
     <TextView
+        android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -27,5 +28,17 @@
         android:text='@string/about_dev'
         android:textColor="@color/black"
         android:textSize="26sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/back"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="@string/back"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:background="@drawable/back_button"
+        android:layout_gravity="center_horizontal"
+        />
 
 </LinearLayout>

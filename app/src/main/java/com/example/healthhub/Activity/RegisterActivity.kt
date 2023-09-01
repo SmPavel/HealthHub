@@ -2,6 +2,7 @@ package com.example.healthhub.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -9,18 +10,22 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.healthhub.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var etUsername: EditText
+    private lateinit var etEmail: EditText
     private lateinit var etPass: EditText
     private lateinit var etConfPass: EditText
     private lateinit var etWeight: EditText
     private lateinit var etHeight: EditText
 
+    private val TAG = "RegisterActivity"
+
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+    private lateinit var databaseRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +34,14 @@ class RegisterActivity : AppCompatActivity() {
         val btnSignUp = findViewById<Button>(R.id.signUp)
         val btnBack = findViewById<Button>(R.id.back)
 
-        etUsername = findViewById(R.id.username)
+        etEmail = findViewById(R.id.email)
         etPass = findViewById(R.id.password)
         etConfPass = findViewById(R.id.password_confirm)
         etWeight = findViewById(R.id.weight)
         etHeight = findViewById(R.id.height)
 
-
         auth = Firebase.auth
+        database = FirebaseDatabase.getInstance()
 
         btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -48,36 +53,81 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-        private fun signUp(){
-            val username = etUsername.text.toString()
-            val pass = etPass.text.toString()
-            val confirmPassword = etConfPass.text.toString()
-            val weight = etWeight.text.toString()
-            val height = etHeight.text.toString()
+    private fun signUp() {
+        val email = etEmail.text.toString()
+        val pass = etPass.text.toString()
+        val confirmPassword = etConfPass.text.toString()
+        val weight = etWeight.text.toString()
+        val height = etHeight.text.toString()
 
-            if (username.isBlank() || pass.isBlank() || confirmPassword.isBlank()) {
-                Toast.makeText(this, "Username and Password can't be blank", Toast.LENGTH_SHORT).show()
-                return
-            }
+        if (email.isBlank() || pass.isBlank() || confirmPassword.isBlank()) {
+            Toast.makeText(this, "Username and Password can't be blank", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
 
-            if (weight.isBlank() || height.isBlank()){
-                Toast.makeText(this, "Please enter your weight and height", Toast.LENGTH_SHORT).show()
-                return
-            }
+        if (weight.isBlank() || height.isBlank()) {
+            Toast.makeText(this, "Please enter your weight and height", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
 
-            if (pass != confirmPassword) {
-                Toast.makeText(this, "Password and Confirm Password do not match", Toast.LENGTH_SHORT)
-                    .show()
-                return
-            }
-
-            auth.createUserWithEmailAndPassword(username, pass).addOnCompleteListener(this) {
-                if (it.isSuccessful) {
-                    Toast.makeText(this, "Successfully Singed Up", Toast.LENGTH_SHORT).show()
-                    finish()
+        if (pass != confirmPassword) {
+            Toast.makeText(
+                this,
+                "Password and Confirm Password do not match",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+            return
+        }
+        auth.createUserWithEmailAndPassword(email, pass)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val userId = auth.currentUser!!.uid
+                    //Verify Email
+                    verifyEmail();
+                    //update user profile information
+                    val currentUserDb = databaseRef.child(userId)
+                    currentUserDb.child("Weight").setValue(weight)
+                    currentUserDb.child("Height").setValue(height)
+                    updateUserInfoAndUI()
                 } else {
-                    Toast.makeText(this, "Singed Up Failed!", Toast.LENGTH_SHORT).show()
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        this, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-        }
     }
+
+    private fun updateUserInfoAndUI() {
+        //start next activity
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+    }
+    private fun verifyEmail() {
+        val mUser = auth.currentUser;
+        mUser!!.sendEmailVerification()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        this,
+                        "Verification email sent to " + mUser.getEmail(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Log.e(TAG, "sendEmailVerification", task.exception)
+                    Toast.makeText(
+                        this,
+                        "Failed to send verification email.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
+}

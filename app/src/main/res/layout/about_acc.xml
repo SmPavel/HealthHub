@@ -122,5 +122,20 @@
         app:layout_constraintLeft_toRightOf="@id/height_num"
         />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/back"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="@string/back"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:background="@drawable/back_button"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/height"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

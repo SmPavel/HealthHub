@@ -27,7 +27,19 @@
 
         <activity android:name=".Activity.LoginActivity" />
 
+        <activity android:name=".Activity.HomeActivity" />
 
+        <activity android:name=".Activity.StartScreenActivity" />
+
+        <activity android:name=".Activity.CalorieTableActivity" />
+
+        <activity android:name=".Activity.WorkoutActivity" />
+
+        <activity android:name=".Activity.AboutAppActivity" />
+
+        <activity android:name=".Activity.AboutUserActivity" />
+
+        <activity android:name=".Activity.DrawerActivity" />
 
        <!-- <activity android:name=".SearchableActivity"
             android:exported="true">
