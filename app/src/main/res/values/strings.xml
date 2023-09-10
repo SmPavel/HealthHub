@@ -29,4 +29,7 @@
     <string name="welcome_image">welcome_image</string>
     <string name="confirm_password">Confirm password</string>
     <string name="email">" Email"</string>
+    <string name="your_workout">Your Workout</string>
+    <string name="logout">Logout</string>
+    <string name="uspg_email">Email:</string>
 </resources>

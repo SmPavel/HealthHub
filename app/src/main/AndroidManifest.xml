@@ -39,7 +39,6 @@
 
         <activity android:name=".Activity.AboutUserActivity" />
 
-        <activity android:name=".Activity.DrawerActivity" />
 
        <!-- <activity android:name=".SearchableActivity"
             android:exported="true">

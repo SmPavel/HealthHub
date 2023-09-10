@@ -12,9 +12,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
+    private lateinit var btnSignUp: Button
+    private lateinit var btnBack: Button
+
     private lateinit var etEmail: EditText
     private lateinit var etPass: EditText
     private lateinit var etConfPass: EditText
@@ -25,14 +29,13 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-    private lateinit var databaseRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.register_screen)
 
-        val btnSignUp = findViewById<Button>(R.id.signUp)
-        val btnBack = findViewById<Button>(R.id.back)
+        btnSignUp = findViewById(R.id.signUp)
+        btnBack = findViewById(R.id.back)
 
         etEmail = findViewById(R.id.email)
         etPass = findViewById(R.id.password)
@@ -40,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
         etWeight = findViewById(R.id.weight)
         etHeight = findViewById(R.id.height)
 
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
         btnBack.setOnClickListener {
@@ -84,47 +87,34 @@ class RegisterActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val userId = auth.currentUser!!.uid
-                    //Verify Email
-                    verifyEmail();
-                    //update user profile information
-                    val currentUserDb = databaseRef.child(userId)
-                    currentUserDb.child("Weight").setValue(weight)
-                    currentUserDb.child("Height").setValue(height)
-                    updateUserInfoAndUI()
+                    val user = auth.currentUser
+                    if (user != null) {
+                        val userRef = FirebaseFirestore.getInstance().collection("userProfiles").document(user.uid)
+
+                        val userData = hashMapOf(
+                            "email" to email,
+                            "weightKg" to weight.toDouble(),
+                            "heightCm" to height.toDouble()
+                        )
+
+                        userRef.set(userData)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "User profile created successfully")
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener { error ->
+                                Log.w(TAG, "Error creating user profile:", error)
+                                Toast.makeText(
+                                    this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     Toast.makeText(
                         this, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-    }
-
-    private fun updateUserInfoAndUI() {
-        //start next activity
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-    }
-    private fun verifyEmail() {
-        val mUser = auth.currentUser;
-        mUser!!.sendEmailVerification()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        this,
-                        "Verification email sent to " + mUser.getEmail(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Log.e(TAG, "sendEmailVerification", task.exception)
-                    Toast.makeText(
-                        this,
-                        "Failed to send verification email.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

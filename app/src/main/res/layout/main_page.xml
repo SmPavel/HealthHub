@@ -1,71 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <include layout="@layout/toolbar"/>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/calorie_table"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/calorie_table"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/calorie_table_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:contentDescription="@string/calorie_table"
+        android:padding="1dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/healthy_food_menu_vector"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calorie_table" />
+
+    <TextView
+        android:id="@+id/your_workout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/your_workout"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintLeft_toRightOf="@id/calorie_table"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/your_exercises_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/your_workout_plan"
+        android:src="@drawable/workout"
+        app:layout_constraintLeft_toRightOf="@id/calorie_table_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/your_workout" />
+
+    <TextView
+        android:id="@+id/about_acc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/about_account"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calorie_table_button" />
+
+    <ImageButton
+        android:id="@+id/about_acc_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_about_acc"
+        android:background="@color/white"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_acc"/>
+
+    <TextView
+        android:id="@+id/about_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/about_app"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calorie_table_button" />
+
+    <ImageButton
+        android:id="@+id/about_app_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_about_app"
+        android:background="@color/white"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_app"/>
 
 
-        <TextView
-            android:id="@+id/calorie_table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:text="@string/calorie_table"
-            android:textColor="@color/black"
-            android:textSize="26sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageButton
-            android:id="@+id/calorie_table_button"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/healthy_food_menu_vector"
-            android:scaleType="centerCrop"
-            android:background="@color/white"
-            android:padding="1dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/calorie_table"
-            android:contentDescription="@string/calorie_table"
-            />
-
-        <TextView
-            android:id="@+id/your_exercises"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/your_workout_plan"
-            android:textColor="@color/black"
-            android:textSize="26sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/calorie_table_button"
-            />
-
-        <ImageButton
-            android:id="@+id/your_exercises_button"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/workout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/your_exercises"
-            android:contentDescription="@string/your_workout_plan"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.drawerlayout.widget.DrawerLayout>

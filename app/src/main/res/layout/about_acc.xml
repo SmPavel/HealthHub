@@ -4,10 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
     <TextView
         android:id="@+id/about_acc"
         android:layout_width="wrap_content"
@@ -16,18 +12,18 @@
         android:text="@string/about_account"
         android:textColor="@color/black"
         android:textSize="34sp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
 
     <TextView
-        android:id="@+id/login"
+        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginStart="50dp"
-        android:text="@string/user_login"
+        android:text="@string/uspg_email"
         android:textColor="@color/black"
         android:textSize="26sp"
         app:layout_constraintTop_toBottomOf="@id/about_acc"
@@ -35,15 +31,16 @@
         />
 
     <TextView
-        android:id="@+id/login_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/email_text"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="user login"
         android:textColor="@color/black"
         android:textSize="26sp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
         app:layout_constraintTop_toBottomOf="@id/about_acc"
-        app:layout_constraintLeft_toRightOf="@id/login"
+        app:layout_constraintLeft_toRightOf="@id/email"
         />
 
     <TextView
@@ -55,7 +52,7 @@
         android:text="@string/user_weight"
         android:textColor="@color/black"
         android:textSize="26sp"
-        app:layout_constraintTop_toBottomOf="@id/login"
+        app:layout_constraintTop_toBottomOf="@id/email"
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
@@ -63,11 +60,13 @@
         android:id="@+id/weight_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="35dp"
+        android:minHeight="35dp"
         android:layout_marginTop="50dp"
         android:background="@android:color/transparent"
-        android:text="100"
         android:textSize="26sp"
-        app:layout_constraintTop_toBottomOf="@id/login_text"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/email_text"
         app:layout_constraintLeft_toRightOf="@id/weight"
         />
 
@@ -80,7 +79,7 @@
         android:background="@android:color/transparent"
         android:text="kg"
         android:textSize="26sp"
-        app:layout_constraintTop_toBottomOf="@id/login_text"
+        app:layout_constraintTop_toBottomOf="@id/email_text"
         app:layout_constraintLeft_toRightOf="@id/weight_num"
         />
 
@@ -101,10 +100,12 @@
         android:id="@+id/height_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="35dp"
+        android:minHeight="35dp"
         android:layout_marginTop="50dp"
         android:background="@android:color/transparent"
-        android:text="180"
         android:textSize="26sp"
+        android:inputType="number"
         app:layout_constraintTop_toBottomOf="@id/weight_num"
         app:layout_constraintLeft_toRightOf="@id/height"
         />
@@ -121,12 +122,26 @@
         app:layout_constraintTop_toBottomOf="@id/weight_num_dim"
         app:layout_constraintLeft_toRightOf="@id/height_num"
         />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="@string/logout"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:background="@drawable/red_button"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/height"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
         android:text="@string/back"
         android:textSize="20sp"
         android:textColor="@color/black"
@@ -134,7 +149,7 @@
         android:layout_gravity="center_horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/height"
+        app:layout_constraintTop_toBottomOf="@+id/logout"
         />
 
 
