@@ -13,72 +13,100 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.FieldPath;
-
+import com.google.firebase.firestore.FieldPath
 
 class CalorieTableActivity : AppCompatActivity() {
     private lateinit var btnBack: Button
-
     private lateinit var searchBar: SearchView
+    private lateinit var listView: ListView
+    private lateinit var adapter: CalorieTableListViewAdapter
+    private lateinit var db: FirebaseFirestore
+    private val originalData = mutableListOf<MyData>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.calorie_table)
 
         btnBack = findViewById(R.id.back)
         searchBar = findViewById(R.id.search_bar)
+        listView = findViewById(R.id.listview)
+
+        db = FirebaseFirestore.getInstance()
+        adapter = CalorieTableListViewAdapter(this, originalData)
+        listView.adapter = adapter
 
         btnBack.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
+
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                val db = FirebaseFirestore.getInstance()
-                val query: Query = db.collection("calorieTable")
-                    .whereEqualTo("foodName", query)
-                query.get().addOnSuccessListener(OnSuccessListener<QuerySnapshot> { querySnapshot ->
-                    val snapshotList = querySnapshot.documents
-                })
-
+                query?.let { performSearch(it) }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val db = FirebaseFirestore.getInstance()
-                val query = db.collection("calorieTable")
-                    .orderBy("foodName").startAt(newText)
-                    .endAt(newText + "\uf8ff")
-                query.get().addOnSuccessListener { querySnapshot ->
-                    val snapshotList = querySnapshot.documents
-                    // Handle filtered results
+                if (newText.isNullOrEmpty()) {
+                    originalData.clear()
+                    adapter.notifyDataSetChanged()
+                    fetchInitialData()
+                } else {
+                    newText?.let { performSearch(it) }
                 }
                 return false
             }
         })
-        // Get the data from Firestore and associate it with ListView through the adapter
-        val listView = findViewById<ListView>(R.id.listview)
-        val db = FirebaseFirestore.getInstance()
 
+        fetchInitialData()
+    }
+
+    private fun fetchInitialData() {
         db.collection("calorieTable")
             .limit(5)
             .get()
             .addOnSuccessListener { querySnapshot ->
-                val data = querySnapshot.documents.mapNotNull { document ->
+                val snapshotList = querySnapshot.documents
+                for (document in snapshotList) {
                     if (document != null && document.exists()) {
-                        MyData(
+                        val myData = MyData(
                             document["name"] as String,
                             document[FieldPath.of("calorie/100g")] as Long,
                             document["proteins"] as Long,
                             document["fats"] as Long,
                             document["carbohydrates"] as Long
                         )
-                    } else {
-                        null
+                        originalData.add(myData)
                     }
                 }
+                adapter.notifyDataSetChanged()
+            }
+    }
 
-                val adapter = CalorieTableListViewAdapter(this, data)
-                listView.adapter = adapter
+    private fun performSearch(query: String) {
+        originalData.clear()
+        adapter.notifyDataSetChanged()
+
+        db.collection("calorieTable")
+            .orderBy("name")
+            .startAt(query)
+            .endAt(query + "\uf8ff")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val snapshotList = querySnapshot.documents
+                for (document in snapshotList) {
+                    if (document != null && document.exists()) {
+                        val myData = MyData(
+                            document["name"] as String,
+                            document[FieldPath.of("calorie/100g")] as Long,
+                                    document["proteins"] as Long,
+                                document["fats"] as Long,
+                                document["carbohydrates"] as Long
+                            )
+                                    originalData.add(myData)
+                    }
+                }
+                adapter.notifyDataSetChanged()
             }
     }
 }
