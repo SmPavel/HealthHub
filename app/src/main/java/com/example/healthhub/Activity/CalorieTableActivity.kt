@@ -8,11 +8,9 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.healthhub.R
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.FieldPath
 
 class CalorieTableActivity : AppCompatActivity() {
@@ -24,6 +22,7 @@ class CalorieTableActivity : AppCompatActivity() {
     private val originalData = mutableListOf<MyData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.calorie_table)
 
@@ -95,15 +94,17 @@ class CalorieTableActivity : AppCompatActivity() {
             .addOnSuccessListener { querySnapshot ->
                 val snapshotList = querySnapshot.documents
                 for (document in snapshotList) {
-                    if (document != null && document.exists()) {
+                    if (document != null && document.exists
+
+                            ()) {
                         val myData = MyData(
                             document["name"] as String,
                             document[FieldPath.of("calorie/100g")] as Long,
-                                    document["proteins"] as Long,
-                                document["fats"] as Long,
-                                document["carbohydrates"] as Long
-                            )
-                                    originalData.add(myData)
+                            document["proteins"] as Long,
+                            document["fats"] as Long,
+                            document["carbohydrates"] as Long
+                        )
+                        originalData.add(myData)
                     }
                 }
                 adapter.notifyDataSetChanged()
